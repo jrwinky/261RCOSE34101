@@ -12,4 +12,5 @@ void create_process(Process *p){
     p->remaining_time;
     p->waiting_time;
     p->turnaround_time;
-};x
+};
+

@@ -23,6 +23,6 @@ Process topqueue(queue *q);
 
 int IsEmptyqueue(queue *q);
 
-void destroyqueue(queue *q);
+int IsFullqueue(queue *q);
 
 #endif

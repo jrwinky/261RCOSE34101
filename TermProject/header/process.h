@@ -8,6 +8,7 @@ typedef struct{
     int io_burst_time;
     int io_frequency;
     int priority;
+    int sort_key;
 
     int remaining_time;
     int waiting_time;

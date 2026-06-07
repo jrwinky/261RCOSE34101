@@ -1,5 +1,5 @@
-#ifndef PRIORITYQUEUE_H
-#define PRIORITYQUEUE_H
+#ifndef PQUEUE_H
+#define PQUEUE_H
 
 #include "process.h"
 
@@ -8,14 +8,12 @@
 typedef struct{
     Process array[MAX_CAPACITY];
     int capacity;
-    int front;
-    int rear;
     int size;
 } pqueue;
 
 void initpqueue(pqueue *q);
 
-void insert(pqueue *q, Process p);
+void insert(pqueue *q, Process p, int priority);
 
 void remove(pqueue *q);
 
@@ -23,16 +21,6 @@ Process toppqueue(pqueue *q);
 
 int IsEmpty(pqueue *q);
 
-void destroypqueue(pqueue *q);
-
-
-
-
-
-
-
-
-
-
+int IsFull(pqueue *q);
 
 #endif

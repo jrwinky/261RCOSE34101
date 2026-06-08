@@ -10,20 +10,24 @@ void initqueue(queue *q){
 }
 
 void enqueue(queue *q, Process p){
-    if (IsFullqueue) return;
-    q->array[q->rear] = p;
+    if (IsFullqueue(q)) return;
     q->rear = (q->rear + 1) % q->capacity;
+    q->array[q->rear] = p;
     q->size++;
 }
 
 void dequeue(queue *q){
-    if (IsEmptyqueue) return;
+    if (IsEmptyqueue(q)) return;
     q->front = (q->front + 1) % q->capacity;
     q->size--;
 }
 
 Process topqueue(queue *q){
-    if (IsEmptyqueue) return;
+    if (IsEmptyqueue(q)){
+        Process empty = {0}; // This safely initializes EVERY field in the struct to 0
+        empty.pid = -1;
+        return empty;
+    }
     return q->array[q->front];
 }
 

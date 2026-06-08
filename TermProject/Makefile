@@ -1,7 +1,7 @@
 # --- Compiler Settings ---
 CC = gcc
 CFLAGS = -Wall -Wextra -g
-INCLUDES = -I include
+INCLUDES = -I header
 
 # --- Files and Folders ---
 # This automatically finds every .c file in your source folder!

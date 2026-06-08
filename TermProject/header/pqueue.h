@@ -13,14 +13,14 @@ typedef struct{
 
 void initpqueue(pqueue *q);
 
-void insert(pqueue *q, Process p, int priority);
+void insertpqueue(pqueue *q, Process p, int priority);
 
-void remove(pqueue *q);
+void removepqueue(pqueue *q);
 
 Process toppqueue(pqueue *q);
 
-int IsEmpty(pqueue *q);
+int IsEmptypqueue(pqueue *q);
 
-int IsFull(pqueue *q);
+int IsFullpqueue(pqueue *q);
 
 #endif

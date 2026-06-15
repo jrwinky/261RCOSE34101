@@ -19,6 +19,8 @@ typedef struct{
 
 void create_process(Process *p);
 void reset_pid_tracker();
+void print();
+void printdataset();
 int is_pid_used(int pid);
 
 #endif

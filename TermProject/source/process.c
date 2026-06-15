@@ -17,6 +17,21 @@ void reset_pid_tracker() {
     used_count = 0;
 }
 
+void print(Process* p){
+    printf("%d\t%d\t%d\t%d\t%d\t%d\n", 
+        p->pid, p->arrival_time, p->cpu_burst_time, p->io_burst_time, p->io_frequency, p->priority);
+}
+
+void printdataset(Process processes[], int num_processes) {
+    printf("\n--- CURRENT DATASET ---\n");
+    printf("PID\tArrival\tCPU\tI/O\tFreq\tPriority\n");
+    printf("--------------------------------------------------\n");
+    for (int i = 0; i < num_processes; i++) {
+        print(&processes[i]); // Pass the memory address of each process
+    }
+    printf("--------------------------------------------------\n");
+}
+
 void create_process(Process *p){
     int new_pid;
     do {

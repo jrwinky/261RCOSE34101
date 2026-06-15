@@ -18,17 +18,6 @@ typedef struct {
     float throughput;
 } AlgorithmStats;
 
-void get_stats(Process processes[], int num_processes, float *avg_tat, float *avg_wait) {
-    float sum_turnaround = 0;
-    float sum_waiting = 0;
-    for (int i = 0; i < num_processes; i++) {
-        sum_turnaround += processes[i].turnaround_time;
-        sum_waiting += processes[i].waiting_time;
-    }
-    *avg_tat = sum_turnaround / num_processes;
-    *avg_wait = sum_waiting / num_processes;
-}
-
 int main() {
     srand(time(NULL)); // Initialize random seed ONCE
     Process original_dataset[MAX_BUFFER];
@@ -67,6 +56,7 @@ int main() {
                 }
                 created = 1;
                 printf("New dataset created with %d processes.\n", num_processes);
+                printdataset(original_dataset, num_processes);
                 break;
 
             case 2:
@@ -139,8 +129,6 @@ int main() {
                     // 3. The Inner Loop (Tests all 6 algorithms on this dataset)
                     for (int algo = 0; algo < 6; algo++) {
                         memcpy(temp_dataset, original_dataset, sizeof(Process) * num_processes);
-                        
-                        float temp_tat, temp_wait;
 
                         switch(algo) {
                             case 0: simulate_FCFS(temp_dataset, num_processes, 1); break;
@@ -151,12 +139,16 @@ int main() {
                             case 5: simulate_RR(temp_dataset, num_processes, TIME_QUANTUM, 1); break;
                         }
             
-                        // Get the stats for this specific run...
-                        get_stats(temp_dataset, num_processes, &temp_tat, &temp_wait);
-                        
-                        // ...and ADD them to the running total!
+                        float temp_tat, temp_wait, temp_util, temp_through;
+
+                        // Call the new shared function!
+                        calculate_core_metrics(temp_dataset, num_processes, &temp_tat, &temp_wait, &temp_util, &temp_through);
+
+                        // Accumulate for your massive dataset averages...
                         macro_results[algo].avg_turnaround += temp_tat;
                         macro_results[algo].avg_waiting += temp_wait;
+                        macro_results[algo].cpu_utilization += temp_util;
+                        macro_results[algo].throughput += temp_through;
                     }
                 }
 

@@ -23,5 +23,6 @@ void simulate_RR(Process processes[], int num_processes, int time_quantum, int s
 
 void record_gantt(GanttChart *chart, int pid, int start, int end);
 void print_chart(GanttChart *chart);
+void calculate_core_metrics(Process processes[], int num_processes, float *avg_tat, float *avg_wait, float *cpu_util, float *throughput);
 void compute_metrics(Process processes[], int num_processes);
 #endif

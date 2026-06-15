@@ -25,32 +25,47 @@ void print_chart(GanttChart *chart) {
     printf("\n");
 }
 
-void compute_metrics(Process processes[], int num_processes){
+void calculate_core_metrics(Process processes[], int num_processes, float *avg_tat, float *avg_wait, float *cpu_util, float *throughput) {
     float total_turnaround = 0;
-    float total_wait = 0;
+    float total_waiting = 0;
     float total_busy_time = 0;
     float total_simulation_time = 0;
 
+    for (int i = 0; i < num_processes; i++) {
+        total_turnaround += processes[i].turnaround_time;
+        total_waiting += processes[i].waiting_time;
+        total_busy_time += processes[i].cpu_burst_time;
+
+        float finish_time = processes[i].arrival_time + processes[i].turnaround_time;
+        if (finish_time > total_simulation_time) {
+            total_simulation_time = finish_time;
+        }
+    }
+
+    // The mathematically correct OS formulas!
+    *avg_tat = total_turnaround / num_processes;
+    *avg_wait = total_waiting / num_processes;
+    *cpu_util = (total_busy_time / total_simulation_time) * 100.0f;
+    *throughput = (float)num_processes / total_simulation_time;
+}
+
+void compute_metrics(Process processes[], int num_processes) {
     printf("\n--- PERFORMANCE METRICS ---\n");
     printf("PID\tTurnaround Time\tWaiting Time\n");
     printf("--------------------------------------\n");
     
     for (int i = 0; i < num_processes; i++) {
         printf("%d\t%d\t\t%d\n", processes[i].pid, processes[i].turnaround_time, processes[i].waiting_time);
-        total_turnaround += processes[i].turnaround_time;
-        total_wait += processes[i].waiting_time;
-        total_busy_time += processes[i].cpu_burst_time;
-        int finish_time = processes[i].arrival_time + processes[i].turnaround_time;
-        if (finish_time > total_simulation_time) {
-            total_simulation_time = finish_time;
-        }
     }
 
+    float avg_tat, avg_wait, cpu_util, throughput;
+    calculate_core_metrics(processes, num_processes, &avg_tat, &avg_wait, &cpu_util, &throughput);
+
     printf("--------------------------------------\n");
-    printf("Average Turnaround Time: %.2f\n", total_turnaround / num_processes);
-    printf("Average Waiting Time:    %.2f\n", total_wait / num_processes);
-    printf("Average CPU Utilization: %.2f\n", total_busy_time / num_processes);
-    printf("Average Throughput: %.2f\n", total_simulation_time / num_processes);
+    printf("Average Turnaround Time: %.2f\n", avg_tat);
+    printf("Average Waiting Time:    %.2f\n", avg_wait);
+    printf("CPU Utilization:         %.2f%%\n", cpu_util);
+    printf("Throughput:              %.4f processes/tick\n\n", throughput);
 }
 
 void simulate_FCFS(Process processes[], int num_processes, int silent_mode) {

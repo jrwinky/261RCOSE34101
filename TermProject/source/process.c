@@ -40,7 +40,7 @@ void create_process(Process *p){
     p->pid = new_pid;
     used_pids[used_count++] = new_pid;
     p->arrival_time = rand() % 20; // Generate random arrival time between 0 and 19   
-    p->cpu_burst_time = (rand() % 11) + 10; // Generate CPU burst between 10 and 20
+    p->cpu_burst_time = (rand() % 21) + 10; // Generate CPU burst between 10 and 30
     p->priority = (rand() % 5) + 1; // Priority between 1 and 5 (1 being highest priority)
     int is_cpu_bound = (rand() % 100); // Roll a number from 0 to 99
     

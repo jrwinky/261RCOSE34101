@@ -112,6 +112,8 @@ int main() {
                 for(int i = 0; i < 6; i++) {
                     macro_results[i].avg_turnaround = 0;
                     macro_results[i].avg_waiting = 0;
+                    macro_results[i].cpu_utilization = 0;
+                    macro_results[i].throughput = 0;
                 }
 
                 printf("\n>>> RUNNING MACRO SIMULATION ON %d DATASETS <<<\n", num_runs);
@@ -156,14 +158,16 @@ int main() {
                 printf("\n==========================================================\n");
                 printf("   MACRO COMPARISON TABLE (AVERAGED OVER %d DATASETS)\n", num_runs);
                 printf("==========================================================\n");
-                printf("%-20s | %-15s | %-15s\n", "Algorithm", "Macro Avg TAT", "Macro Avg Wait");
+                printf("%-20s | %-15s | %-15s | %-15s | %-15s\n", "Algorithm", "Macro Avg TAT", "Macro Avg Wait", "Macro CPU Util", "Macro Throughput");
                 printf("----------------------------------------------------------\n");
                 for(int i = 0; i < 6; i++) {
                     // Divide the accumulated totals by num_runs to get the true average
-                    printf("%-20s | %-15.2f | %-15.2f\n", 
+                    printf("%-20s | %-15.2f | %-15.2f | %-15.5f | %15.5f\n", 
                         macro_results[i].name, 
                         macro_results[i].avg_turnaround / num_runs, 
-                        macro_results[i].avg_waiting / num_runs);
+                        macro_results[i].avg_waiting / num_runs,
+                        macro_results[i].cpu_utilization / num_runs,
+                        macro_results[i].throughput / num_runs);
                 }
                 break;
             } // End of case 8 scope

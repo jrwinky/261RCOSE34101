@@ -42,7 +42,6 @@ void calculate_core_metrics(Process processes[], int num_processes, float *avg_t
         }
     }
 
-    // The mathematically correct OS formulas!
     *avg_tat = total_turnaround / num_processes;
     *avg_wait = total_waiting / num_processes;
     *cpu_util = (total_busy_time / total_simulation_time) * 100.0f;

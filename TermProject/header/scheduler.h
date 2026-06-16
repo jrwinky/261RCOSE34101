@@ -10,7 +10,7 @@ typedef struct {
 } GanttInterval;
 
 typedef struct {
-    GanttInterval intervals[1000];
+    GanttInterval intervals[2000];
     int count;
 } GanttChart;
 
